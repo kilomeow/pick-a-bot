@@ -1,21 +1,25 @@
 from typing import List
 
 from trigger import Trigger
+from promise import ActionPromise
 
 
 class Action:
-    def run(self):
+    @property
+    def promise(self) -> ActionPromise:
         raise NotImplemented
 
-    def bind(self, trigger: Trigger):
+    def stick(self, trigger: Trigger):
         raise NotImplemented
+
+    __le__ = stick
 
     @property
     def on_complete(self) -> Trigger:
         raise NotImplemented
 
     @property
-    def after_triggers(self) -> List[Trigger]:
+    def triggers(self) -> List[Trigger]:
         raise NotImplemented
 
 
