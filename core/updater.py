@@ -22,10 +22,3 @@ class Updater:
                 sleep(1)
             except Unauthorized:
                 pass
-
-
-class SessionDispatcher:
-    def __init__(self):
-        ...
-
-

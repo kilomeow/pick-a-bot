@@ -1,0 +1,3 @@
+class SessionDispatcher:
+    def __init__(self):
+        ...
