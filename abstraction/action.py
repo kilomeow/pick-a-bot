@@ -1,10 +1,12 @@
 from typing import List
 
-from trigger import Trigger
-from promise import ActionPromise
+from .trigger import Trigger
+from .promise import ActionPromise
+
+from meta.id import Identifiable
 
 
-class Action:
+class Action(metaclass=Identifiable):
     @property
     def promise(self) -> ActionPromise:
         raise NotImplemented
