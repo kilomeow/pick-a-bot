@@ -11,7 +11,7 @@ class State(metaclass=Identifiable):
     def bind(self, *triggers):
         for t in triggers:
             self.bind_one(t)
-a
+
     __ge__ = bind
 
     def __add__(self, state):
