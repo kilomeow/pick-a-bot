@@ -1,7 +1,8 @@
-from abstraction.trigger import Trigger
+from abstraction import Trigger
+from meta import Identifiable
 
 
-class BaseTrigger(Trigger):
+class BaseTrigger(Trigger, metaclass=Identifiable):
     def __init__(self):
         self._actions = list()
         self._session = None

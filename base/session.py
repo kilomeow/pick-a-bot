@@ -1,7 +1,8 @@
-from abstraction.session import Session
+from abstraction import Session
+from meta import HashIdentifiable
 
 
-class BaseSession(Session):
+class BaseSession(Session, metaclass=HashIdentifiable):
     def dispatch(self, trigger):
         if not trigger.activated:
             raise RuntimeError("{0} was dispatched to {1} "

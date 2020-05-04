@@ -1,7 +1,10 @@
-from abstraction.states import State, MetaState
+from abstraction import State, MetaState, Trigger
+from meta import Identifiable
+
+from typing import List
 
 
-class BaseState(State):
+class BaseState(State, metaclass=Identifiable):
     def __init__(self):
         self._triggers = list()
 
