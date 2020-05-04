@@ -1,26 +1,31 @@
 from threading import Lock
-from toolz import partial
+
+# Lock in the future must be replaced with mechanism which allows to create
+# non-conflicting ids for all application instances
 
 
-class Identifiable:
-    def __new__(cls, class_name, parents, attributes):
-        print(class_name, 'created')
-        t = type(class_name, parents, attributes)
-        t.__last_ID = 0
-        t.__ID_lock = Lock()
-        t.set_id = partial(cls.set_id, t)
-        t.__new__ = cls.new_instance
-        return t
+class Identifiable(type):
+    def __new__(mcs, class_name, parents, attributes):
+        c = type.__new__(mcs, class_name, parents, attributes)
+        return c
 
-    @staticmethod
-    def set_id(self, instance):
-        self.__ID_lock.acquire()
-        self.__last_ID += 1
-        instance.id = self.__last_ID
-        self.__ID_lock.release()
+    def __init__(cls, class_name, parents, attributes):
+        super().__init__(class_name, parents, attributes)
+        cls.__last_ID = 0
+        cls.__ID_lock = Lock()
+        cls.__new__ = cls.new_instance
+        cls.id = property(cls.full_id)
 
-    @staticmethod
-    def new_instance(self, *args, **kwargs):
-        instance = object.__new__(self)
-        self.set_id(instance)
+    def set_id(cls, instance):
+        cls.__ID_lock.acquire()
+        cls.__last_ID += 1
+        instance._id = cls.__last_ID
+        cls.__ID_lock.release()
+
+    def new_instance(cls, *args, **kwargs):
+        instance = object.__new__(cls)
+        cls.set_id(instance)
         return instance
+
+    def full_id(cls, instance):
+        return f"{cls.__name__}:{instance._id}"
