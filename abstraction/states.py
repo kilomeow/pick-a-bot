@@ -1,10 +1,10 @@
 from .trigger import Trigger
 
 from typing import List
-from meta.id import Identifiable
+from meta import Identifiable
 
 
-class State(metaclass=Identifiable):
+class State(metaclass=type):
     def bind_one(self, trigger: Trigger):
         raise NotImplemented
 
@@ -42,3 +42,8 @@ class MetaState(State):
         for s in self.states:
             s.update(s.triggers)
         return list(s)
+
+
+class StateGen:
+    def __getattr__(self, item):
+        raise NotImplemented

@@ -2,10 +2,8 @@ from telegram import Update
 
 from .promise import TriggerPromise
 
-from meta.id import Identifiable
 
-
-class Trigger(metaclass=Identifiable):
+class Trigger(metaclass=type):
     @property
     def promise(self) -> TriggerPromise:
         raise NotImplemented

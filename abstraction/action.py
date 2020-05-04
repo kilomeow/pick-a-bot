@@ -1,7 +1,9 @@
+from __future__ import annotations
 from typing import List
 
 from .trigger import Trigger
 from .promise import ActionPromise
+from .states import State, StateGen
 
 from meta.id import Identifiable
 
@@ -11,20 +13,19 @@ class Action(metaclass=Identifiable):
     def promise(self) -> ActionPromise:
         raise NotImplemented
 
-    def stick(self, trigger: Trigger):
+    def adhere(self, trigger: Trigger):
         raise NotImplemented
 
-    __le__ = stick
+    __le__ = adhere
 
     @property
-    def on_complete(self) -> Trigger:
+    def states(self) -> StateGen:
+        raise NotImplemented
+
+    @property
+    def end(self) -> State:
         raise NotImplemented
 
     @property
     def triggers(self) -> List[Trigger]:
         raise NotImplemented
-
-
-class BaseAction:
-    def bind(self, trigger: Trigger):
-        trigger.hook(self)

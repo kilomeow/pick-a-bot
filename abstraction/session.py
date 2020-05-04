@@ -3,7 +3,7 @@ from typing import List
 from .action import Action, Trigger
 
 
-class Session:
+class Session(metaclass=type):
     def __init__(self):
         raise NotImplemented
 
