@@ -2,4 +2,5 @@ from meta import HashIdentifiable
 
 
 class ActionResult(metaclass=type):
-    pass
+    def __await__(self):
+        raise NotImplemented

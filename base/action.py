@@ -1,7 +1,10 @@
 from abstraction import Action, Trigger
 from meta import Identifiable
 
+import base.context
+import base.promise
+
 
 class BaseAction(Action, metaclass=Identifiable):
-    def bind(self, trigger: Trigger):
-        trigger.hook(self)
+    def __init__(self):
+        self.context = base.context.ActionContextGen(self)

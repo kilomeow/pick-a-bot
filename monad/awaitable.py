@@ -1,11 +1,11 @@
 from abstraction import AwaitableMonadTypeClass, Generic, T
 
 def curry1(func, kwarg=None):
-    if kwarg is not None
+    if kwarg is not None: ...
     def curried_head(*arg1, **kwarg1):
         if kwarg1:
             if len(kwarg1.keys()) == 1:
-
+                ...
             else:
                 raise TypeError("there could be only one keyword arguments")
         def curried_tail(*args, **kwargs):
@@ -57,7 +57,7 @@ class AwaitableMonadicType(type):
 class AwaitableMonad(AwaitableMonadTypeClass, metaclass=AwaitableMonadicType):
     def __rshift__(self, func):
         if len(func.__code__.co_varnames) > 1:
-
+            ...
 
 
 class PrimitiveAwaitable:

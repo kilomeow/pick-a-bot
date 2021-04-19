@@ -1,55 +1,58 @@
+from __future__ import annotations
+
+import abstraction.act as act
+from .session import Session
+from asyncio import Task
+
+
+class Gen:
+    def __call__(self, session: Session) -> Promise:
+        raise NotImplemented
+
+
 class Promise:
-    @property
-    def session(self):  # session : Session
-        return NotImplemented
-
-    def set_session(self, session):  # session : Session
-        raise NotImplemented
-
-
-class ActionPromise:
-    @property
-    def action(self):  # -> Action
-        raise NotImplemented
-
-    def run(self):
-        raise NotImplemented
-
-    @property
-    def started(self) -> bool:
-        raise NotImplemented
-
-    @property
-    def complete(self) -> bool:
-        raise NotImplemented
-
-    @property
-    def rejected(self) -> bool:
-        raise NotImplemented
-
-
-class TriggerPromise:
-    def activate(self):
-        raise NotImplemented
+    session: Session
+    task: Task
+    status: PromiseStatus
 
     def reject(self):
         raise NotImplemented
 
-    @property
-    def activated(self) -> bool:
+
+class PromiseStatus:
+    pass
+    # Idle: Case
+    # Rejected: Case[RejectionReason]
+    # Working: Case
+    # Completed: Case
+
+
+class RejectionReason:
+    pass
+
+
+class ActionPromise(Promise):
+    action: act.Action
+
+
+class TriggerPromise(Promise):
+    trigger: act.Trigger
+    session: Session
+    context: act.Context
+
+    def activate(self):
         raise NotImplemented
 
-    @property
-    def rejected(self) -> bool:
+
+class GenAction(Gen):
+    action: act.Action
+
+    def __call__(self, session: Session) -> ActionPromise:
         raise NotImplemented
 
-    @property
-    def on_activate(self):  # -> Trigger
-        ...
 
-    def set_dispatched(self):
-        raise NotImplemented
+class GenTrigger(Gen):
+    trigger: act.Trigger
 
-    @property
-    def dispatched(self) -> bool:
+    def __call__(self, session: Session) -> TriggerPromise:
         raise NotImplemented

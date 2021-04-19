@@ -1,3 +1,5 @@
 python-telegram-bot
-thespian
 toolz
+algebraic-data-types
+pydantic
+tinycss2

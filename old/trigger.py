@@ -9,7 +9,7 @@ class Trigger(metaclass=type):
         raise NotImplemented
 
     def hook(self, action):  # action: Action
-        raise NotImplemented
+        raise NotImplemeanted
 
     def __call__(self, *args, **kwargs):
         for a in args:

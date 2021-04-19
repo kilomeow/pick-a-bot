@@ -1,18 +1,22 @@
+from __future__ import annotations
 from typing import List
+from telegram import Bot
 
-from .action import Action, Trigger
+import abstraction.act as act
+
+
+class Worker:
+    sessions: List[Session]
+
+    def create_task(self, cr):
+        raise NotImplemented
+
+    def run(self):
+        raise NotImplemented
 
 
 class Session(metaclass=type):
-    def __init__(self):
-        raise NotImplemented
-
-    def dispatch(self, trigger):
-        raise NotImplemented
-
-    @property
-    def current_triggers(self) -> List[Trigger]:
-        raise NotImplemented
-
-    def apply(self, action: Action):
-        raise NotImplemented
+    bot: Bot
+    entry: act.Context
+    contexts: List[act.Context]
+    worker: Worker
